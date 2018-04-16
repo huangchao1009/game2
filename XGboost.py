@@ -1,8 +1,7 @@
 # -*-coding:utf-8 -*-
 import numpy as np
 import pandas as pd
-import lightgbm as lgb
-import sys
+import xgboost as xgb
 from sklearn.model_selection import train_test_split
 
 
@@ -20,38 +19,41 @@ test_tobepredicted=pd.read_csv('./df_affinity_test_toBePredicted.csv')
 x_train,x_val,y_train,y_val=train_test_split(train_data,label1,test_size=0.2,random_state=100)
 # train=lgb.Dataset(train_data,label=label1)
 # test=lgb.Dataset(test_data,label=label2,reference=train)
-lgb_train=lgb.Dataset(x_train,label=y_train)
-lgb_val=lgb.Dataset(x_val,label=y_val,reference=lgb_train)
-print('使用LIGHTBGM训练')
+xgb_train=xgb.DMatrix(x_train,label=y_train)
+xgb_val=xgb.DMatrix(x_val,label=y_val)
+print('使用XGboost训练')
 
 params={
-    'boosting_type':'gbdt',#训练方式
-    'objective':'regression_l2',#目标
-    'metric':'l2',#损失函数
+    'n_estimators':1000,
+    'max_depth':4,
     'min_child_weight':3,#叶子上的最小样本数
-    'num_leaves':2**5,
-    'lambda_l2':10,
     'subsample':0.7,
     'colsample_bytree': 0.7,
     'colsample_bylevel':0.7,
     'learning_rate':0.05,
-    'tree_method': 'exact',
     'seed':2017,
     'nthread':12,
-    'silent': True
+    'silent': 1
     }
 
-num_round=3000
 
-gbm=lgb.train(params,lgb_train,num_round,valid_sets=lgb_val,verbose_eval=50)
+
+#plst+=[('eval_metric','auc')]
+#evallist=[(x_val,'eval'),(x_train,'train')]
+
+num_round=1000
+plst=list(params.items())
+plst+= [('eval_metric', 'auc')]
+evallist = [(xgb_val, 'eval'), (xgb_train, 'train')]
+xgb=xgb.train(params,xgb_train,num_boost_round=num_round)
 print("save model")
-gbm.save_model('./model/model2.txt')
+xgb.save_model('./model/model3.txt')
 
 print('开始预测')
-preds_sub=gbm.predict(test_data)
+preds_sub=xgb.predict(test_data)
 
 test_tobepredicted['Ki']=preds_sub
-test_tobepredicted.to_csv('./result/result.csv',index=False)
+test_tobepredicted.to_csv('./result/result3.csv',index=False)
 
 # with open("result1.csv", "w") as f:
 #     sys.stdout = f
