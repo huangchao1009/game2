@@ -6,8 +6,6 @@ df_affinity_test=pd.read_csv("./df_affinity_test_toBePredicted.csv")#41383
 df_affinity_test['Ki']=-1
 
 
-
-
 Finger_feature=pd.read_csv("./feature/Finger_feature.csv")
 molecule_feature=pd.read_csv("./feature/molecule_feature.csv")
 protein_sequence_feature=pd.read_csv("./feature/protein_sequence.csv")

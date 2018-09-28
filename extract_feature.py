@@ -83,8 +83,6 @@ def molecule_feature(df):
     molecule_feat=df.drop('Fingerprint',axis=1)
     return molecule_feat
 
-
-
 print('拼接全部数据和指纹信息以及molecule的其他信息')
 Finger_feature=Finger_feature(df_molecule)
 molecule_feature=molecule_feature(df_molecule)
