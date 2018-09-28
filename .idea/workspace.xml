@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ae5c2e47-e055-4dd6-8708-c0babeb0293e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/XGboost.py" afterPath="$PROJECT_DIR$/XGboost.py" />
-      <change beforePath="$PROJECT_DIR$/extract_feature.py" afterPath="$PROJECT_DIR$/extract_feature.py" />
-      <change beforePath="$PROJECT_DIR$/merge_feat.py" afterPath="$PROJECT_DIR$/merge_feat.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
